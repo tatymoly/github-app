@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { UserFormComponent } from './user-form.component';
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: './user-form/user-form.module#UserFormModule',
+    component: UserFormComponent,
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class UserFormRoutingModule {}

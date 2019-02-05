@@ -1,0 +1,182 @@
+<div class="row__container__button">
+  <button mat-raised-button color="primary" (click)="addUser()">
+    Nuevo Usuario
+  </button>
+  <button
+    mat-raised-button
+    color="accent"
+    class="margin-left-10"
+    (click)="deleteUser()"
+  >
+    Eliminar Usuario
+  </button>
+</div>
+<!-- User Details -->
+<div class="row__container" *ngIf="formValid">
+  <div class="user__container">
+    <h2 class="model">{{ firstName }} {{ lastName }}</h2>
+    <ul class="user__detail">
+      <li>
+        <p>
+          <span class="label">Cédula: </span> <span>{{ idNumber }}</span>
+        </p>
+      </li>
+      <li>
+        <p>
+          <span class="label">Email: </span> <span>{{ email }}</span>
+        </p>
+      </li>
+      <li>
+        <p>
+          <span class="label">Fecha de nacimiento: </span>
+          <span>{{ birthday | date }}</span>
+        </p>
+      </li>
+      <li>
+        <p>
+          <span class="label">Usuario Github: </span>
+          <span>{{ githubId }}</span>
+        </p>
+      </li>
+      <button mat-raised-button color="primary" (click)="showRepos(githubId)">
+        Cargar Repositorios
+      </button>
+    </ul>
+  </div>
+</div>
+<!-- User Form -->
+<div class="row__container" *ngIf="showUserForm">
+  <form [formGroup]="userForm">
+    <div class="row__list">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          maxlength="13"
+          placeholder="Cédula"
+          formControlName="idNumber"
+        />
+      </mat-form-field>
+    </div>
+    <div class="row__list row--names">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          maxlength="20"
+          placeholder="Nombres"
+          formControlName="firstName"
+        />
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          maxlength="20"
+          placeholder="Apellidos"
+          formControlName="lastName"
+        />
+      </mat-form-field>
+    </div>
+    <div class="row__list">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          [matDatepicker]="picker"
+          placeholder="Fecha de nacimiento"
+          formControlName="birthday"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="row__list">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          placeholder="Correo Electrónico"
+          formControlName="email"
+        />
+      </mat-form-field>
+    </div>
+    <div class="row__list">
+      <mat-form-field class="full-width">
+        <input
+          matInput
+          placeholder="Usuario Github"
+          maxlength="20"
+          formControlName="githubId"
+        />
+      </mat-form-field>
+    </div>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="updateForm()"
+      [disabled]="userForm.invalid"
+    >
+      Guardar
+    </button>
+    <button
+      mat-raised-button
+      color="accent"
+      class="margin-left-10"
+      (click)="clearForm()"
+    >
+      Limpiar
+    </button>
+  </form>
+</div>
+
+<!-- Repositories list -->
+<div *ngIf="showRepositories" class="row__container repo__list">
+  <mat-form-field>
+    <input
+      matInput
+      (keyup)="applyFilter($event.target.value)"
+      placeholder="Filter"
+    />
+  </mat-form-field>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+        <td mat-cell *matCellDef="let row">{{ row.name | titlecase }}</td>
+      </ng-container>
+
+      <!-- Language Column -->
+      <ng-container matColumnDef="language">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Lenguaje</th>
+        <td mat-cell *matCellDef="let row">{{ row.language }}</td>
+      </ng-container>
+
+      <!-- Branch Column -->
+      <ng-container matColumnDef="default_branch">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Branch</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.default_branch }}
+        </td>
+      </ng-container>
+
+      <!-- Url Column -->
+      <ng-container matColumnDef="urlGit">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Url Github</th>
+        <td mat-cell *matCellDef="let row">
+          <a href="{{ row.html_url }}" target="_blank"> {{ row.html_url }} </a>
+        </td>
+      </ng-container>
+
+      <!-- Url Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
+        <td mat-cell *matCellDef="let row">
+          {{ row.description }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10]"></mat-paginator>
+  </div>
+</div>
