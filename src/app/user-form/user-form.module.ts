@@ -8,8 +8,11 @@ import { GithubService } from '../shared/services/github.service';
 import { MaterialModule } from '../../material-module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { HeaderComponent } from '../shared/header/header.component';
+import { FooterComponent } from '../shared/footer/footer.component';
+
 @NgModule({
-  declarations: [UserFormComponent],
+  declarations: [UserFormComponent, HeaderComponent, FooterComponent],
   imports: [
     CommonModule,
     MaterialModule,

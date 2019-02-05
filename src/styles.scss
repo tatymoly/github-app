@@ -1,4 +1,93 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$app-blue: (
+  50: #24292e,
+  100: #24292e,
+  200: #24292e,
+  300: #24292e,
+  400: #24292e,
+  500: #24292e,
+  600: #24292e,
+  700: #24292e,
+  800: #24292e,
+  900: #24292e,
+  A100: #24292e,
+  A200: #24292e,
+  A400: #24292e,
+  A700: #24292e,
+  contrast: (
+    50: white,
+    100: white,
+    200: white,
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: white,
+    A200: white,
+    A400: white,
+    A700: white,
+  ),
+);
+
+$app-orange: (
+  50: #f29072,
+  100: #f29072,
+  200: #f29072,
+  300: #f29072,
+  400: #f29072,
+  500: #f29072,
+  600: #f29072,
+  700: #f29072,
+  800: #f29072,
+  900: #f29072,
+  A100: #f29072,
+  A200: #f29072,
+  A400: #f29072,
+  A700: #f29072,
+  contrast: (
+    50: white,
+    100: white,
+    200: white,
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+    A100: white,
+    A200: white,
+    A400: white,
+    A700: white,
+  ),
+);
+
+$my-app-primary: mat-palette($app-blue, 900);
+$my-app-accent: mat-palette($mat-red, A100);
+$my-app-warn: mat-palette($mat-deep-orange);
+$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+@include angular-material-theme($my-app-theme);
+
+.alternate-theme {
+  $alternate-primary: mat-palette($mat-light-blue);
+  $alternate-accent: mat-palette($mat-yellow, 400);
+  $alternate-theme: mat-light-theme($alternate-primary, $alternate-accent);
+  @include angular-material-theme($alternate-theme);
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
